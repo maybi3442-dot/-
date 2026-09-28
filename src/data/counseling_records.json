@@ -1,0 +1,260 @@
+{
+  "sessions": [
+    {
+      "id": "session-seed-1",
+      "counselorId": "rights_guardian",
+      "counselorName": "한결 멘토",
+      "title": "학부모 부당 항의 및 퇴근 후 야간 전화 연락",
+      "createdAt": "2026. 9. 28.",
+      "updatedAt": "2026. 9. 28.",
+      "category": "parent_complaint",
+      "categoryName": "학부모 민원 및 교권 침해",
+      "stressIntensity": 5,
+      "detectedKeywords": [
+        "학부모",
+        "전화",
+        "퇴근 후",
+        "항의",
+        "교권"
+      ],
+      "messages": [
+        {
+          "id": "seed-1-1",
+          "role": "user",
+          "text": "어제 저녁 9시에 학부모님이 전화를 걸어 우리 아이 자리 배치가 마음에 안 든다며 고성을 지르셨어요. 밤새 심장이 두근거려 잠을 못 잤습니다.",
+          "timestamp": "16:40"
+        },
+        {
+          "id": "seed-1-2",
+          "role": "model",
+          "text": "선생님, 밤늦은 시간에 얼마나 놀라고 가슴이 떨리셨습니까. 교원은 야간에 학부모의 폭언이나 부당한 요구를 받아내야 할 법적 의무가 전혀 없습니다. 이것은 명백한 교권 침해 사안입니다. 오늘 학교에 출근하셨다면 즉시 관리자에게 상황을 공유하시고, 정규 근무 시간 외 연락에 대한 정중한 선 긋기 공식 문구를 전송하세요. 제가 곁에서 단단한 방패가 되어드리겠습니다.",
+          "timestamp": "16:41"
+        }
+      ],
+      "notes": "한결 멘토의 조언대로 교감선생님께 구두 보고를 마침. 퇴근 후에는 안심번호 자동 응답을 켜두기로 결정.",
+      "tags": [
+        "학부모민원",
+        "야간연락",
+        "교권보호"
+      ]
+    },
+    {
+      "id": "session-seed-2",
+      "counselorId": "senior_mentor",
+      "counselorName": "라온 쌤",
+      "title": "수업 방해 학생 지도 곤란 및 학급 분위기 침체",
+      "createdAt": "2026. 9. 28.",
+      "updatedAt": "2026. 9. 28.",
+      "category": "classroom_instruction",
+      "categoryName": "수업 운영 및 학생 생활지도",
+      "stressIntensity": 4,
+      "detectedKeywords": [
+        "수업",
+        "학생",
+        "방해",
+        "소리지르고",
+        "생활지도"
+      ],
+      "messages": [
+        {
+          "id": "seed-2-1",
+          "role": "user",
+          "text": "수업 시간마다 자리에서 일어나 소리를 지르고 다른 아이들의 학습을 방해하는 아이가 있어요. 아무리 타일러도 듣지 않아 다른 아이들에게 미안하고 눈물이 납니다.",
+          "timestamp": "14:20"
+        },
+        {
+          "id": "seed-2-2",
+          "role": "model",
+          "text": "선생님, 20명이 넘는 아이들을 홀로 이끌면서 그런 돌발 행동을 마주하면 베테랑 교사도 순간 막막하고 진이 빠집니다. 선생님의 지도력이 부족해서가 아닙니다. 그 아이의 주의집중 어려움은 선생님 개인의 탓이 아니에요. 수업 중에는 잠시 타임아웃 공간을 활용하시고, 담임교사 혼자 짊어지려 하지 마시고 교내 상담실(Wee클래스)이나 학년 부장님께 도움의 손길을 청하세요.",
+          "timestamp": "14:21"
+        }
+      ],
+      "notes": "혼자 끙끙 앓지 않고 Wee클래스 전문상담교사 선생님께 연계 상담을 의뢰하기로 함.",
+      "tags": [
+        "생활지도",
+        "수업방해",
+        "교실경영"
+      ]
+    },
+    {
+      "id": "session-seed-3",
+      "counselorId": "psychologist",
+      "counselorName": "소원 상담사",
+      "title": "끝없는 공문과 잡무로 인한 교직 회의감",
+      "createdAt": "2026. 9. 28.",
+      "updatedAt": "2026. 9. 28.",
+      "category": "admin_work",
+      "categoryName": "과중한 행정 업무 및 잡무",
+      "stressIntensity": 3,
+      "detectedKeywords": [
+        "공문",
+        "나이스",
+        "행정",
+        "잡무",
+        "회의감"
+      ],
+      "messages": [
+        {
+          "id": "seed-3-1",
+          "role": "user",
+          "text": "수업 준비를 해야 할 시간에 끝도 없이 내려오는 교육청 공문과 나이스 오류 처리에 매달리다 보면 내가 사무원인지 교사인지 회의감이 듭니다.",
+          "timestamp": "17:10"
+        },
+        {
+          "id": "seed-3-2",
+          "role": "model",
+          "text": "대한민국 교사라면 누구나 깊이 공감하는 비극적인 아픔입니다. 아이들의 눈빛을 보러 교단에 섰는데, 모니터 앞 서류에 갇혀 있을 때의 허탈감은 영혼을 갉아먹지요. 완벽하게 해내려 애쓰지 마세요. 공문은 \"기한 내 제출\"에만 집중하시고, 남는 소중한 에너지는 선생님 자신의 숨고르기에 아껴두세요.",
+          "timestamp": "17:11"
+        }
+      ],
+      "notes": "행정 공문은 80% 완성도로 신속히 털어내고 나를 위한 퇴근 시간을 사수하기로 약속.",
+      "tags": [
+        "행정업무",
+        "공문과다",
+        "에너지분배"
+      ]
+    },
+    {
+      "id": "session-seed-4",
+      "counselorId": "senior_mentor",
+      "counselorName": "라온 쌤",
+      "title": "내가 무능한 교사라는 자책감과 번아웃",
+      "createdAt": "2026. 9. 28.",
+      "updatedAt": "2026. 9. 28.",
+      "category": "emotional_burnout",
+      "categoryName": "정서적 소진 및 자책·인간관계",
+      "stressIntensity": 4,
+      "detectedKeywords": [
+        "자책감",
+        "무능",
+        "자격",
+        "불안"
+      ],
+      "messages": [
+        {
+          "id": "seed-4-1",
+          "role": "user",
+          "text": "옆 반 선생님은 아이들도 잘 다루고 학부모와도 원만한데, 저만 교실에서 매일 쩔쩔매는 것 같아 교사 자격이 없다는 생각이 들어요.",
+          "timestamp": "18:00"
+        },
+        {
+          "id": "seed-4-2",
+          "role": "model",
+          "text": "선생님, 겉으로 완벽해 보이는 교실도 안을 들여다보면 저마다의 눈물과 남모를 상처가 있습니다. 남과 비교하는 순간 교직은 지옥이 됩니다. 선생님은 오늘 아이들 곁에서 진심으로 고민하고 아파하셨잖아요. 그 따뜻한 고민 자체가 이미 좋은 선생님이라는 증거입니다.",
+          "timestamp": "18:01"
+        }
+      ],
+      "notes": "남과의 비교를 멈추고 오늘 내가 아이들에게 건넨 따뜻한 인사 한마디를 기억하기.",
+      "tags": [
+        "비교멈추기",
+        "자책감해소",
+        "수석교사위로"
+      ]
+    }
+  ],
+  "burnoutHistory": [
+    {
+      "id": "burnout-demo-1",
+      "date": "2026. 9. 28.",
+      "score": 16,
+      "totalMax": 28,
+      "level": "경계",
+      "exhaustionScore": 8,
+      "depersonalizationScore": 5,
+      "achievementScore": 3,
+      "aiPrescription": {
+        "letterTitle": "선생님, 참 무거운 교실의 짐을 혼자 버티고 계셨군요",
+        "warmLetter": "누군가에게 기댈 틈도 없이 학급 아이들과 수많은 행정 업무, 학부모 민원을 혼자 감당해 오셨습니다. 번아웃은 선생님의 역량 부족이 아니라 너무 오랫동안 쉼 없이 달렸다는 정직한 신체적 신호입니다.",
+        "prescriptions": [
+          {
+            "title": "퇴근 후 교실 문과 함께 생각 닫기",
+            "action": "교문을 나서는 순간 학교 카톡 알림을 무음으로 전환하고 집까지 10분간 의식적으로 천천히 걷기"
+          },
+          {
+            "title": "착한 교사 콤플렉스 내려놓기",
+            "action": "모든 아이와 학부모를 100% 만족시킬 수 없음을 인정하고, 오늘 내가 지켜낸 1가지만 칭찬하기"
+          },
+          {
+            "title": "따뜻한 온수 샤워와 4-7-8 호흡",
+            "action": "잠들기 전 5분간 긴장된 어깨 근육을 이완하며 숨을 길게 내쉬기"
+          }
+        ],
+        "comfortQuote": "완벽한 교사가 아니어도 괜찮습니다. 선생님의 다정한 눈빛만으로도 아이들은 충분히 자랍니다."
+      }
+    }
+  ],
+  "teacherDiary": [
+    {
+      "id": "diary-demo-1",
+      "date": "2026. 9. 28.",
+      "title": "오늘 교실에서 버텨낸 나에게 건네는 말",
+      "content": "점심시간에 아이들 급식 지도를 마치고 잠시 교탁에 앉았을 때, 00이가 종이접기 하트를 쥐어주고 갔다. 힘들다가도 이런 작은 순간에 울컥한다. 내 마음을 먼저 챙겨야 아이들에게도 따뜻할 수 있다는 상담사의 말을 잊지 말자.",
+      "mood": "comforted",
+      "createdAt": "2026-09-28T13:02:08.464Z"
+    }
+  ],
+  "latestAnalysis": {
+    "analyzedAt": "2026. 9. 28. PM 01:10",
+    "totalConversations": 4,
+    "primaryStressCategory": "parent_complaint",
+    "primaryCategoryName": "학부모 민원 및 교권 침해",
+    "categoryDistribution": {
+      "parent_complaint": {
+        "count": 1,
+        "percentage": 31,
+        "name": "학부모 민원 및 교권"
+      },
+      "admin_work": {
+        "count": 1,
+        "percentage": 19,
+        "name": "행정 업무 및 잡무"
+      },
+      "classroom_instruction": {
+        "count": 1,
+        "percentage": 25,
+        "name": "수업 및 생활지도"
+      },
+      "emotional_burnout": {
+        "count": 1,
+        "percentage": 25,
+        "name": "정서 소진 및 자책"
+      }
+    },
+    "stressTrend": "학부모 민원 및 교권 침해 영역에서 가장 빈번한 긴장과 에너지 소진이 관측됩니다.",
+    "recurringTriggers": [
+      "학부모",
+      "전화",
+      "퇴근 후",
+      "항의"
+    ],
+    "emotionalKeywords": [
+      "심장 두근거림",
+      "자책감",
+      "불안",
+      "회의감"
+    ],
+    "aiComprehensiveDiagnosis": "선생님의 누적 대화 분석 결과, 학부모의 부당한 요구나 퇴근 후 연락 등 거친 감정적 항의로 인해 심리적 안정감이 가장 크게 위협받고 있습니다. 퇴근 후에도 연락에 대한 불안으로 뇌가 이완되지 못하는 과각성 상태가 관찰됩니다.",
+    "tailoredCounselingStrategy": "학부모 응대 시 \"선생님 잘못이 아님\"을 최우선으로 확립하고, 개인 연락처 대신 교원 안심번호 및 학교 공식 소통 채널만을 사용하도록 단호히 가이드할 것.",
+    "recommendedActions": [
+      {
+        "title": "퇴근 후 알림 완벽 차단",
+        "description": "18시 이후 교원 안심번호 앱 자동 응답 모드 활성화 및 메신저 알림 끄기",
+        "targetCategory": "민원·교권"
+      },
+      {
+        "title": "공식 소통 템플릿 사용",
+        "description": "감정적인 즉답을 피하고 \"안심 대응 문구\"를 활용하여 정중하게 원칙 전달",
+        "targetCategory": "민원·교권"
+      },
+      {
+        "title": "관리자 사전 공유 체계화",
+        "description": "악성 민원 징후가 있을 시 교감/학년부장에게 즉시 구두 공유하여 혼자 방어하지 않기",
+        "targetCategory": "민원·교권"
+      }
+    ]
+  },
+  "meta": {
+    "lastUpdated": "2026-09-28T13:10:38.325Z",
+    "version": "1.1.0"
+  }
+}

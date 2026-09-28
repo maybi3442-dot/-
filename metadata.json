@@ -1,0 +1,6 @@
+{
+  "name": "토닥쌤 - 지친 선생님을 위한 마음 치유 상담소",
+  "description": "과중한 업무, 학부모 민원, 생활지도로 지친 대한민국 선생님들을 위한 따뜻한 공감 AI 상담 및 교권 안심 케어 플랫폼",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
