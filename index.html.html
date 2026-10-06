@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>수업용 원판 룰렛 - 칠판 테마</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter & Jua for friendly school look -->
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti for winning celebration -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .font-jua {
+            font-family: 'Jua', sans-serif;
+        }
+        /* Blackboard Theme styling */
+        .blackboard-bg {
+            background-color: #1b382b;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 0%, rgba(0,0,0,0.2) 100%),
+                url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            border: 8px solid #3c2415;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.6), 0 10px 25px rgba(0,0,0,0.4);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(229, 231, 235, 0.8);
+        }
+    </style>
+</head>
+<body class="bg-slate-900 min-h-screen text-slate-100 flex flex-col items-center justify-between p-4 md:p-8">
+
+    <header class="w-full max-w-4xl text-center mb-4">
+        <div class="inline-flex items-center gap-2 bg-emerald-800/80 text-emerald-200 border border-emerald-600 px-4 py-1.5 rounded-full text-sm font-semibold mb-2 shadow-sm">
+            <i class="fa-solid fa-chalkboard-user"></i> 스마트 교실 칠판 룰렛
+        </div>
+        <h1 class="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 to-amber-300 font-jua tracking-wide">
+            두근두근 선생님 룰렛
+        </h1>
+        <p class="text-emerald-200/80 text-sm md:text-base mt-1">수업 시간에 발표자를 무작위로 뽑아보세요!</p>
+        <p class="text-xs text-amber-300/90 font-semibold mt-1">✨ 구독 좋아요 알림 설정 필수! ✨</p>
+    </header>
+
+    <main class="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-8 items-center flex-grow blackboard-bg rounded-3xl p-6 md:p-8">
+        
+        <!-- Left Column: Roulette Board & Spin Button -->
+        <div class="lg:col-span-7 flex flex-col items-center justify-center relative">
+            <!-- Pointer / Arrow on top -->
+            <div class="absolute -top-1 z-20 flex flex-col items-center animate-bounce">
+                <div class="w-0 h-0 border-l-[16px] border-l-transparent border-r-[16px] border-r-transparent border-t-[30px] border-amber-400 drop-shadow-lg"></div>
+            </div>
+
+            <!-- Roulette Canvas Container -->
+            <div class="relative p-4 bg-slate-900/40 rounded-full shadow-2xl border-4 border-amber-600/60 flex items-center justify-center">
+                <canvas id="rouletteCanvas" width="380" height="380" class="w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] rounded-full cursor-pointer"></canvas>
+                <!-- Center Hub -->
+                <div class="absolute w-14 h-14 bg-gradient-to-tr from-amber-500 to-yellow-300 rounded-full shadow-lg flex items-center justify-center text-slate-900 font-bold border-4 border-white">
+                    <i class="fa-solid fa-star text-lg animate-spin" style="animation-duration: 8s;"></i>
+                </div>
+            </div>
+
+            <!-- Spin Button -->
+            <div class="mt-8 w-full flex justify-center">
+                <button id="spinBtn" class="group relative inline-flex items-center gap-3 px-12 py-4 font-bold text-xl text-slate-900 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-300 rounded-2xl shadow-xl hover:shadow-amber-500/50 transform hover:-translate-y-1 active:translate-y-0 transition-all duration-200 focus:outline-none border-2 border-amber-200 font-jua">
+                    <i class="fa-solid fa-play text-base group-hover:scale-125 transition-transform"></i>
+                    <span>돌리기!</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Right Column: Student Names Management Panel -->
+        <div class="lg:col-span-5 glass-panel p-6 rounded-3xl shadow-xl flex flex-col h-full max-h-[520px] text-slate-800">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2 font-jua">
+                    <i class="fa-solid fa-users text-emerald-700"></i> 학생 명단 관리
+                </h2>
+                <span id="studentCount" class="text-xs font-semibold bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-full">0명</span>
+            </div>
+
+            <!-- Preset & Random Assignment Buttons -->
+            <div class="grid grid-cols-2 gap-2 mb-3">
+                <button onclick="randomAssignStudents()" class="text-xs font-bold bg-amber-100 hover:bg-amber-200 text-amber-800 py-2.5 px-3 rounded-xl transition-colors flex items-center justify-center gap-1.5 shadow-xs cursor-pointer">
+                    <i class="fa-solid fa-dice text-amber-600"></i> 랜덤 배정 (10명)
+                </button>
+                <button onclick="loadPreset('sample')" class="text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 px-3 rounded-xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer">
+                    <i class="fa-solid fa-wand-magic-sparkles text-emerald-600"></i> 모둠 샘플
+                </button>
+            </div>
+            <div class="mb-4">
+                <button onclick="clearStudents()" class="w-full text-xs font-medium bg-rose-50 hover:bg-rose-100 text-rose-600 py-2 px-3 rounded-xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer">
+                    <i class="fa-solid fa-trash-can"></i> 전체 비우기
+                </button>
+            </div>
+
+            <!-- Add Single Student Input -->
+            <div class="flex gap-2 mb-4">
+                <input type="text" id="studentInput" placeholder="학생 이름 입력..." class="flex-grow px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-600 transition-all text-slate-800" onkeypress="handleKeyPress(event)">
+                <button onclick="addStudent()" class="bg-emerald-700 hover:bg-emerald-800 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors shadow-sm cursor-pointer">
+                    추가
+                </button>
+            </div>
+
+            <!-- Students Scrollable List -->
+            <div id="studentListContainer" class="flex-grow overflow-y-auto pr-1 space-y-2 border border-slate-200 rounded-xl p-2 bg-slate-50">
+                <!-- Dynamically populated items -->
+            </div>
+        </div>
+    </main>
+
+    <footer class="mt-4 text-center text-xs text-emerald-300/70">
+        <p>💡 수업 전 <span class="text-amber-300 font-bold">구독 좋아요 알림 설정</span> 부탁드려요! | 제작: 스마트 교실 도구</p>
+    </footer>
+
+    <div id="winnerModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl p-8 max-w-sm w-full mx-4 text-center shadow-2xl transform scale-95 transition-transform duration-300 relative overflow-hidden" id="modalContent">
+            <div class="absolute -top-12 -left-12 w-24 h-24 bg-amber-400 rounded-full opacity-20"></div>
+            <div class="absolute -top-12 -right-12 w-24 h-24 bg-rose-500 rounded-full opacity-20"></div>
+
+            <div class="w-16 h-16 bg-gradient-to-tr from-amber-400 to-orange-500 rounded-2xl mx-auto flex items-center justify-center text-white text-3xl shadow-lg mb-4 animate-bounce">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+            <p class="text-xs font-extrabold text-emerald-700 uppercase tracking-widest mb-1">🎉 팡파레 울림! 당첨 결과 🎉</p>
+            <h3 id="winnerText" class="text-3xl font-extrabold text-slate-900 mb-6 font-jua">-</h3>
+            <p class="text-xs text-slate-500 mb-4 font-semibold">구독 좋아요 알림 설정 완료! 👏</p>
+            <button onclick="closeModal()" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 rounded-xl transition-colors shadow-md font-jua text-lg cursor-pointer">
+                확인
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Default students list
+        let students = ['김철수', '이영희', '박민수', '정지현', '한지우', '강민재', '오서윤', '윤도현'];
+        
+        // Random Korean first/last names pools for random assignment
+        const lastNames = ['김', '이', '박', '정', '조', '윤', '장', '임', '한', '오', '서', '신', '권', '황', '안', '송'];
+        const firstNames = ['민준', '서준', '도윤', '예준', '시우', '주원', '하준', '지호', '지후', '준우', '서윤', '서현', '지우', '하윤', '민서', '지민', '예은', '수아', '다은', '채원'];
+
+        const canvas = document.getElementById('rouletteCanvas');
+        const ctx = canvas.getContext('2d');
+        const spinBtn = document.getElementById('spinBtn');
+        const studentInput = document.getElementById('studentInput');
+        const studentListContainer = document.getElementById('studentListContainer');
+        const studentCountBadge = document.getElementById('studentCount');
+        const winnerModal = document.getElementById('winnerModal');
+        const modalContent = document.getElementById('modalContent');
+        const winnerText = document.getElementById('winnerText');
+
+        let currentAngle = 0; // Current angle in radians
+        let isSpinning = false;
+
+        // Vibrant color palette suited for chalkboard contrast
+        const colors = [
+            '#10b981', '#3b82f6', '#f59e0b', '#ec4899', 
+            '#8b5cf6', '#06b6d4', '#f43f5e', '#84cc16',
+            '#d946ef', '#14b8a6', '#f97316', '#6366f1'
+        ];
+
+        // Initialize App
+        function init() {
+            renderStudentList();
+            drawRoulette();
+        }
+
+        // Render Student Badges / List
+        function renderStudentList() {
+            studentListContainer.innerHTML = '';
+            studentCountBadge.textContent = `${students.length}명`;
+
+            if (students.length === 0) {
+                studentListContainer.innerHTML = `
+                    <div class="h-full flex flex-col items-center justify-center text-slate-400 text-sm py-8">
+                        <i class="fa-solid fa-user-slash text-2xl mb-2"></i>
+                        등록된 학생이 없습니다.
+                    </div>
+                `;
+                return;
+            }
+
+            students.forEach((student, index) => {
+                const item = document.createElement('div');
+                item.className = 'flex items-center justify-between bg-white px-3.5 py-2 rounded-xl border border-slate-200/80 shadow-xs hover:border-emerald-300 transition-all';
+                item.innerHTML = `
+                    <span class="text-sm font-medium text-slate-700 truncate max-w-[180px]">${index + 1}. ${escapeHtml(student)}</span>
+                    <button onclick="removeStudent(${index})" class="text-slate-400 hover:text-rose-500 transition-colors p-1 cursor-pointer">
+                        <i class="fa-solid fa-xmark text-sm"></i>
+                    </button>
+                `;
+                studentListContainer.appendChild(item);
+            });
+            drawRoulette();
+        }
+
+        // Draw Roulette Wheel
+        function drawRoulette() {
+            const width = canvas.width;
+            const height = canvas.height;
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const radius = Math.min(centerX, centerY) - 10;
+
+            ctx.clearRect(0, 0, width, height);
+
+            const count = students.length;
+            if (count === 0) {
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+                ctx.fillStyle = '#f1f5f9';
+                ctx.fill();
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = '#94a3b8';
+                ctx.font = 'bold 14px Inter';
+                ctx.fillText('학생을 추가해주세요', centerX, centerY);
+                return;
+            }
+
+            const arcSize = (2 * Math.PI) / count;
+
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            ctx.rotate(currentAngle);
+
+            for (let i = 0; i < count; i++) {
+                const startAngle = i * arcSize;
+                const endAngle = (i + 1) * arcSize;
+
+                // Draw Slice
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.arc(0, 0, radius, startAngle, endAngle);
+                ctx.closePath();
+                ctx.fillStyle = colors[i % colors.length];
+                ctx.fill();
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 2.5;
+                ctx.stroke();
+
+                // Draw Text
+                ctx.save();
+                ctx.rotate(startAngle + arcSize / 2);
+                ctx.textAlign = 'right';
+                ctx.textBaseline = 'middle';
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 15px Inter';
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
+                ctx.shadowBlur = 4;
+                ctx.fillText(truncateText(students[i], 8), radius - 28, 0);
+                ctx.restore();
+            }
+
+            ctx.restore();
+        }
+
+        // Add single student
+        function addStudent() {
+            const name = studentInput.value.trim();
+            if (!name) return;
+            students.push(name);
+            studentInput.value = '';
+            renderStudentList();
+        }
+
+        // Randomly assign about 10 students
+        function randomAssignStudents() {
+            const generatedNames = new Set();
+            const targetCount = 10;
+            
+            while (generatedNames.size < targetCount) {
+                const randomLastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+                const randomFirstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+                generatedNames.add(randomLastName + randomFirstName);
+            }
+
+            students = Array.from(generatedNames);
+            renderStudentList();
+        }
+
+        // Handle enter key in input
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') {
+                addStudent();
+            }
+        }
+
+        // Remove student
+        function removeStudent(index) {
+            students.splice(index, 1);
+            renderStudentList();
+        }
+
+        // Clear all
+        function clearStudents() {
+            students = [];
+            renderStudentList();
+        }
+
+        // Load Preset
+        function loadPreset(type) {
+            if (type === 'sample') {
+                students = ['김민수', '이지은', '박서준', '한소희', '정국', '장원영', '손흥민', '김연아', '안유진', '카리나'];
+            }
+            renderStudentList();
+        }
+
+        // Spin Logic
+        spinBtn.addEventListener('click', spinRoulette);
+        canvas.addEventListener('click', spinRoulette);
+
+        function spinRoulette() {
+            if (isSpinning) return;
+            if (students.length === 0) {
+                alertBox('학생 명단이 비어있습니다. 학생을 먼저 추가하거나 [랜덤 배정]을 눌러주세요!');
+                return;
+            }
+
+            isSpinning = true;
+            spinBtn.disabled = true;
+            spinBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
+            const minSpins = 6;
+            const maxSpins = 11;
+            const randomSpins = Math.floor(Math.random() * (maxSpins - minSpins + 1)) + minSpins;
+            const totalRotation = (randomSpins * 2 * Math.PI) + (Math.random() * 2 * Math.PI);
+            const startAngleRef = currentAngle;
+            const spinDuration = 4500; // 4.5 seconds
+
+            let startTimeRef = null;
+
+            function frame(time) {
+                if (!startTimeRef) startTimeRef = time;
+                const elapsed = time - startTimeRef;
+                const progress = Math.min(elapsed / spinDuration, 1);
+                
+                // Ease out cubic for smooth deceleration
+                const ease = 1 - Math.pow(1 - progress, 3);
+                currentAngle = startAngleRef + totalRotation * ease;
+
+                drawRoulette();
+
+                // Trigger fanfare effect right when approaching stop (around 85% progress)
+                if (progress >= 0.85 && !window._fanfareTriggered) {
+                    window._fanfareTriggered = true;
+                    triggerFanfareBurst();
+                }
+
+                if (progress < 1) {
+                    requestAnimationFrame(frame);
+                } else {
+                    isSpinning = false;
+                    window._fanfareTriggered = false;
+                    spinBtn.disabled = false;
+                    spinBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    determineWinner();
+                }
+            }
+
+            requestAnimationFrame(frame);
+        }
+
+        // Fanfare burst animation as wheel slows down
+        function triggerFanfareBurst() {
+            confetti({
+                particleCount: 80,
+                spread: 100,
+                origin: { y: 0.5 },
+                colors: ['#f59e0b', '#ec4899', '#3b82f6', '#10b981', '#ffffff']
+            });
+        }
+
+        // Determine which student won based on final angle
+        function determineWinner() {
+            const count = students.length;
+            const arcSize = (2 * Math.PI) / count;
+            const pointerAngle = (1.5 * Math.PI - (currentAngle % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+            const winningIndex = Math.floor(pointerAngle / arcSize) % count;
+            const winner = students[winningIndex];
+
+            showWinnerModal(winner);
+        }
+
+        // Show Winner Celebration Modal with grand celebration
+        function showWinnerModal(name) {
+            winnerText.textContent = name;
+            winnerModal.classList.remove('hidden');
+            setTimeout(() => {
+                winnerModal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
+
+            // Grand final confetti explosion
+            confetti({
+                particleCount: 180,
+                spread: 90,
+                origin: { y: 0.6 },
+                colors: ['#fbbf24', '#f43f5e', '#6366f1', '#34d399']
+            });
+        }
+
+        // Close Modal
+        function closeModal() {
+            winnerModal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => {
+                winnerModal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Custom alert box replacement
+        function alertBox(message) {
+            winnerText.textContent = message;
+            winnerModal.classList.remove('hidden');
+            setTimeout(() => {
+                winnerModal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        // Utility functions
+        function truncateText(text, maxLen) {
+            return text.length > maxLen ? text.substring(0, maxLen) + '..' : text;
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+
+        // Run on load
+        window.onload = init;
+    </script>
+</body>
+</html>
